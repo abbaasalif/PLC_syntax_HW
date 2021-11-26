@@ -130,10 +130,12 @@ def lex():
         val = parsed_array.pop(0)
         val = val[1]
         nextToken = val
+        print(nextToken)
     else:
         nextToken = None
 
 def stmt():
+    lex()
     if nextToken == 'WHILE_CODE':
         while_stmt()
     elif nextToken == 'FOR_CODE':
@@ -145,9 +147,7 @@ def stmt():
         lex()
         while nextToken != 'right_curly' :
             
-            if nextToken == "IF_CODE":
-                if_stmt()
-            lex()
+            stmt()
         if nextToken == 'right_curly':
             print("End <block>")
             
@@ -225,7 +225,6 @@ def if_stmt():
             if nextToken != 'right_paranthesis':
                 error()
             else:
-                lex()
                 stmt()
                 lex()
                 if nextToken == 'ELSE_CODE':
@@ -233,6 +232,8 @@ def if_stmt():
                     lex()
                     stmt()
                     print("EXIT <ELSE STMT>")
+                else:
+                    stmt()
     print("EXIT <IF STMT>")
 def for_stmt():
     print("Enter <FOR STATMENT>")
@@ -274,10 +275,11 @@ def while_stmt():
             else:
                 lex()
                 stmt()
+    print("Exit <while statement>")
 
 
 
 
     
-lex()
+
 stmt()
